@@ -59,9 +59,21 @@ let viewController = (function () {
     document.querySelector(containerElement).insertAdjacentHTML('beforeend', newHtml)
   }
 
+  function clearFields() {
+    let inputDesc, inputVal
+
+    inputDesc = document.querySelector(DOMstrings.inputDescription)
+    inputVal = document.querySelector(DOMstrings.inputValue)
+
+    inputDesc.value = ''
+    inputDesc.focus()
+    inputVal.value = ''
+  }
+
   return {
     getInput: getInput,
     renderListItem: renderListItem,
+    clearFields: clearFields,
     getDomStrings: function () {
       return DOMstrings;
     },

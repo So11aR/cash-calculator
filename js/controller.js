@@ -17,7 +17,8 @@ let controller = (function(budgetCtrl, uiCtrl) {
     budgetCtrl.test()
 
     uiCtrl.renderListItem(newItem, input.type)
-    generateTestData.init()
+    uiCtrl.clearFields()
+    // generateTestData.init()
   }
 
   return {
