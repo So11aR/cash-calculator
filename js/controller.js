@@ -13,12 +13,16 @@ let controller = (function(budgetCtrl, uiCtrl) {
     let input = uiCtrl.getInput()
     console.log(input);
 
-    let newItem = budgetCtrl.addItem(input.type, input.description, input.value)
-    budgetCtrl.test()
+    if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
+      let newItem = budgetCtrl.addItem(input.type, input.description, input.value)
+      budgetCtrl.test()
+  
+      uiCtrl.renderListItem(newItem, input.type)
+      uiCtrl.clearFields()
+      generateTestData.init()
+    }
 
-    uiCtrl.renderListItem(newItem, input.type)
-    uiCtrl.clearFields()
-    // generateTestData.init()
+
   }
 
   return {
