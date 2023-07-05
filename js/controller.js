@@ -1,7 +1,9 @@
 let controller = (function(budgetCtrl, uiCtrl) {
 
-  let DOM = uiCtrl.getDomStrings()
-  console.log(DOM);
+  let setupEventListeners = function() {
+    let DOM = uiCtrl.getDomStrings()
+    document.querySelector(DOM.form).addEventListener('submit', ctrlAddItem)
+  }
   
   // функция срабатывает при отрпавке формы
   function ctrlAddItem(event) {
@@ -10,10 +12,15 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
     let input = uiCtrl.getInput()
     console.log(input);
-
-    
   }
 
-  document.querySelector(DOM.form).addEventListener('submit', ctrlAddItem)
+  return {
+    init: function() {
+      console.log('App Started!');
+      setupEventListeners()
+    }
+  }
 
 })(modelController, viewController)
+
+controller.init()
