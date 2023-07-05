@@ -1,34 +1,40 @@
-let ExampleItem = function(type, desc, sum) {
-  this.type = type
-  this.desc = desc
-  this.sum = sum
-}
+let generateTestData = (function() {
+  let ExampleItem = function(type, desc, sum) {
+    this.type = type
+    this.desc = desc
+    this.sum = sum
+  }
+  
+  let testData = [
+    new ExampleItem('inc', 'Зарплата', 1245),
+    new ExampleItem('inc', 'Фриланс', 820),
+    new ExampleItem('inc', 'Партнерка', 110),
+    new ExampleItem('inc', 'Продажи', 90),
+  
+    new ExampleItem('exp', 'Рента', 400),
+    new ExampleItem('exp', 'Бензин', 60),
+    new ExampleItem('exp', 'Продукты', 300),
+    new ExampleItem('exp', 'Развлечения', 100)
+  ]
+  
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+  }
+  
+  console.log(getRandomInt(testData.length));
+  
+  function insertInUI() {
+    let random = getRandomInt(testData.length)
+    let randomItem = testData[random]
+  
+    document.querySelector('#input__type').value = randomItem.type
+    document.querySelector('#input__description').value = randomItem.desc
+    document.querySelector('#input__value').value = randomItem.sum
+  }
 
-let testData = [
-  new ExampleItem('inc', 'Зарплата', 1245),
-  new ExampleItem('inc', 'Фриланс', 820),
-  new ExampleItem('inc', 'Партнерка', 110),
-  new ExampleItem('inc', 'Продажи', 90),
+  return {
+    init: insertInUI
+  }
+})()
 
-  new ExampleItem('exp', 'Рента', 400),
-  new ExampleItem('exp', 'Бензин', 60),
-  new ExampleItem('exp', 'Продукты', 300),
-  new ExampleItem('exp', 'Развлечения', 100)
-]
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max)
-}
-
-console.log(getRandomInt(testData.length));
-
-function insertInUI() {
-  let random = getRandomInt(testData.length)
-  let randomItem = testData[random]
-
-  document.querySelector('#input__type').value = randomItem.type
-  document.querySelector('#input__description').value = randomItem.desc
-  document.querySelector('#input__value').value = randomItem.sum
-}
-
-insertInUI()
+generateTestData.init()
