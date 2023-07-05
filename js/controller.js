@@ -12,6 +12,10 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
     let input = uiCtrl.getInput()
     console.log(input);
+
+    budgetCtrl.addItem(input.type, input.description, input.value)
+    
+    budgetCtrl.test()
   }
 
   return {
