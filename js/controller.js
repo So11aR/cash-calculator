@@ -40,6 +40,12 @@ let controller = (function(budgetCtrl, uiCtrl) {
     init: function() {
       console.log('App Started!');
       setupEventListeners()
+      uiCtrl.updateBudget({
+        budget: 0,
+        totalInc: 0,
+        totalExp: 0,
+        percentage: 0
+      })
     }
   }
 
