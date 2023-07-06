@@ -21,8 +21,6 @@ let generateTestData = (function() {
     return Math.floor(Math.random() * max)
   }
   
-  console.log(getRandomInt(testData.length));
-  
   function insertInUI() {
     let random = getRandomInt(testData.length)
     let randomItem = testData[random]

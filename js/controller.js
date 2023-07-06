@@ -8,10 +8,8 @@ let controller = (function(budgetCtrl, uiCtrl) {
   // функция срабатывает при отрпавке формы
   function ctrlAddItem(event) {
     event.preventDefault()
-    console.log('Fired!');
 
     let input = uiCtrl.getInput()
-    console.log(input);
 
     if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
       let newItem = budgetCtrl.addItem(input.type, input.description, input.value)
@@ -31,8 +29,11 @@ let controller = (function(budgetCtrl, uiCtrl) {
     budgetCtrl.calculateBudget()
 
     // получить рассчитанный бюджет из модели
+    budgetObj = budgetCtrl.getBudget()
+    console.log("🚀 ~ file: controller.js:35 ~ updateBudget ~ budgetObj:", budgetObj)
 
     // Отобразить бюджет в шаблоне
+    uiCtrl.updateBudget(budgetObj)
   }
 
   return {

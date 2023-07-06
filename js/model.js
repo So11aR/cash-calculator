@@ -63,7 +63,15 @@ let modelController = (function() {
     } else {
       data.percentage = -1
     }
-    
+  }
+
+  function getBudget() {
+    return {
+      budget: data.budget,
+      totalInc: data.totals.inc,
+      totalExp: data.totals.exp,
+      percentage: data.percentage
+    }
   }
 
   let data = {
@@ -82,6 +90,7 @@ let modelController = (function() {
   return {
     addItem: addItem,
     calculateBudget: calculateBudget,
+    getBudget: getBudget,
     test: function() {
       console.log(data);
     }

@@ -6,6 +6,10 @@ let viewController = (function () {
     inputValue: "#input__value",
     incomeContainer: "#income__list",
     expenseContainer: "#expenses__list",
+    budgetLabel: "#budget-value",
+    incomeLabel: "#income-label",
+    expensesLabel: "#expense-label",
+    expensesPersentLabel: "#expense-persent-label",
   };
 
   function getInput() {
@@ -17,7 +21,7 @@ let viewController = (function () {
   }
 
   function renderListItem(obj, type) {
-    let containerElement, html
+    let containerElement, html;
 
     if (type === "inc") {
       containerElement = DOMstrings.incomeContainer;
@@ -50,30 +54,61 @@ let viewController = (function () {
                           <img src="./img/circle-red.svg" alt="delete" />
                       </button>
                   </div>
-              </li>`
+              </li>`;
     }
-    newHtml = html.replace('%id%', obj.id)
-    newHtml = newHtml.replace('%description%', obj.description)
-    newHtml = newHtml.replace('%value%', obj.value)
-    
-    document.querySelector(containerElement).insertAdjacentHTML('beforeend', newHtml)
+    newHtml = html.replace("%id%", obj.id);
+    newHtml = newHtml.replace("%description%", obj.description);
+    newHtml = newHtml.replace("%value%", obj.value);
+
+    document
+      .querySelector(containerElement)
+      .insertAdjacentHTML("beforeend", newHtml);
   }
 
   function clearFields() {
-    let inputDesc, inputVal
+    let inputDesc, inputVal;
 
-    inputDesc = document.querySelector(DOMstrings.inputDescription)
-    inputVal = document.querySelector(DOMstrings.inputValue)
+    inputDesc = document.querySelector(DOMstrings.inputDescription);
+    inputVal = document.querySelector(DOMstrings.inputValue);
 
-    inputDesc.value = ''
-    inputDesc.focus()
-    inputVal.value = ''
+    inputDesc.value = "";
+    inputDesc.focus();
+    inputVal.value = "";
+  }
+
+  function updateBudget(obj) {
+    document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget
+    document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc
+    document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp
+
+    if (obj.percentage > 0) {
+      document.querySelector(DOMstrings.expensesPersentLabel).textContent = obj.percentage
+    } else {
+      document.querySelector(DOMstrings.expensesPersentLabel).textContent = '--'
+    }
+
+
+    
+    /*
+      return {
+        budget: data.budget,
+        totalInc: data.totals.inc,
+        totalExp: data.totals.exp,
+        percentage: data.percentage
+      }
+
+      budgetLabel: "#budget-value",
+    incomeLabel: "#income-label",
+    expensesLabel: "#expense-label",
+    expensesPersentLabel: "#expense-persent-label",
+    */
   }
 
   return {
     getInput: getInput,
     renderListItem: renderListItem,
     clearFields: clearFields,
+    updateBudget: updateBudget,
     getDomStrings: function () {
       return DOMstrings;
     },
