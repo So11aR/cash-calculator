@@ -25,9 +25,9 @@ let modelController = (function() {
     
     // В зависимости от типа записи используем конструктор и создаем объект
     if (type === 'inc') {
-      newItem = new Income(ID, desc, val)
+      newItem = new Income(ID, desc, parseFloat(val))
     } else if (type === 'exp') {
-      newItem = new Expense(ID, desc, val)
+      newItem = new Expense(ID, desc, parseFloat(val))
     }
 
     // Записываем "запись" / объект в нашу структуру данных
@@ -35,6 +35,35 @@ let modelController = (function() {
 
     // Возвращаем новый объект
     return newItem
+  }
+
+  function calculateTotalSum(type) {
+    let sum = 0
+
+    data.allItems[type].forEach(function(item){
+      sum = sum + item.value
+    })
+
+    return sum
+  }
+
+  function calculateBudget() {
+    // посчитали все доходы
+    data.totals.inc = calculateTotalSum('inc')
+
+    // посчитали все расходы
+    data.totals.exp = calculateTotalSum('exp')
+    
+    // посчитали общий бюджет
+    data.budget = data.totals.inc - data.totals.exp
+    
+    // считаем процент для расходов
+    if (data.totals.inc > 0 ) {
+      data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100)
+    } else {
+      data.percentage = -1
+    }
+    
   }
 
   let data = {
@@ -45,11 +74,14 @@ let modelController = (function() {
     totals: {
       inc: 0,
       exp: 0
-    }
+    },
+    budget: 0,
+    percentage: -1
   }
 
   return {
     addItem: addItem,
+    calculateBudget: calculateBudget,
     test: function() {
       console.log(data);
     }

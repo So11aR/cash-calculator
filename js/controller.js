@@ -20,9 +20,19 @@ let controller = (function(budgetCtrl, uiCtrl) {
       uiCtrl.renderListItem(newItem, input.type)
       uiCtrl.clearFields()
       generateTestData.init()
+
+      // посчитать бюджет
+      updateBudget()
     }
+  }
 
+  function updateBudget() {
+    // рассчитать бюджет в модели
+    budgetCtrl.calculateBudget()
 
+    // получить рассчитанный бюджет из модели
+
+    // Отобразить бюджет в шаблоне
   }
 
   return {
