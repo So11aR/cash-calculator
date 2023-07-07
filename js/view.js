@@ -87,22 +87,10 @@ let viewController = (function () {
     } else {
       document.querySelector(DOMstrings.expensesPersentLabel).textContent = '--'
     }
+  }
 
-
-    
-    /*
-      return {
-        budget: data.budget,
-        totalInc: data.totals.inc,
-        totalExp: data.totals.exp,
-        percentage: data.percentage
-      }
-
-      budgetLabel: "#budget-value",
-    incomeLabel: "#income-label",
-    expensesLabel: "#expense-label",
-    expensesPersentLabel: "#expense-persent-label",
-    */
+  function deleteListItem(itemID) {
+    document.getElementById(itemID).remove()
   }
 
   return {
@@ -110,6 +98,7 @@ let viewController = (function () {
     renderListItem: renderListItem,
     clearFields: clearFields,
     updateBudget: updateBudget,
+    deleteListItem: deleteListItem,
     getDomStrings: function () {
       return DOMstrings;
     },

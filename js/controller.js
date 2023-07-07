@@ -31,16 +31,18 @@ let controller = (function(budgetCtrl, uiCtrl) {
     let itemId, splitId, type, ID
     if (event.target.closest('.item__remove')) {
 
+      // находим id записи, которую надо удалить
       itemId = event.target.closest('li.budget-list__item').id
 
       splitId = itemId.split('-')
       type = splitId[0]
       ID = parseInt(splitId[1])
 
-      console.log(type);
-      console.log(ID);
-
+      // удалить запись из модели
       budgetCtrl.deleteItem(type, ID)
+
+      // удалить запись из шаблона
+      uiCtrl.deleteListItem(itemId)
     }
   }
 
