@@ -43,6 +43,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
       // удалить запись из шаблона
       uiCtrl.deleteListItem(itemId)
+
+      // пересчет бюджета
+      updateBudget()
     }
   }
 
