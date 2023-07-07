@@ -7,6 +7,18 @@ let controller = (function(budgetCtrl, uiCtrl) {
     // клик по таблице с расходами и доходами
     document.querySelector(DOM.budgetTable).addEventListener('click', ctrlDeleteItem)
   }
+
+  // обновляем проценты у каждой записи
+  function updatePercentages() {
+    // считаем проценты для каждой записи расходов
+    budgetCtrl.calculatePercentages()
+    budgetCtrl.test()
+
+    // получаем данные по процентам с модели
+    let idsAndPercents = budgetCtrl.getAllIdsAndPercentages()
+    console.log("🚀 ~ file: controller.js:19 ~ updatePercentages ~ idsAndPercents:", idsAndPercents)
+    // обновляем UI с новыми процентами
+  }
   
   // функция срабатывает при отрпавке формы
   function ctrlAddItem(event) {
@@ -24,6 +36,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
       // посчитать бюджет
       updateBudget()
+
+      // пересчитали проценты
+      updatePercentages()
     }
   }
 
@@ -46,6 +61,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
       // пересчет бюджета
       updateBudget()
+
+      // пересчитали проценты
+      updatePercentages()
     }
   }
 
