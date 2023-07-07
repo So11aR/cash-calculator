@@ -3,6 +3,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
   let setupEventListeners = function() {
     let DOM = uiCtrl.getDomStrings()
     document.querySelector(DOM.form).addEventListener('submit', ctrlAddItem)
+
+    // клик по таблице с расходами и доходами
+    document.querySelector(DOM.budgetTable).addEventListener('click', ctrlDeleteItem)
   }
   
   // функция срабатывает при отрпавке формы
@@ -21,6 +24,23 @@ let controller = (function(budgetCtrl, uiCtrl) {
 
       // посчитать бюджет
       updateBudget()
+    }
+  }
+
+  function ctrlDeleteItem(event) {
+    let itemId, splitId, type, ID
+    if (event.target.closest('.item__remove')) {
+      console.log('Remove btn');
+
+      itemId = event.target.closest('li.budget-list__item').id
+      console.log(itemId);
+
+      splitId = itemId.split('-')
+      type = splitId[0]
+      ID = splitId[1]
+
+      console.log(type);
+      console.log(ID);
     }
   }
 
