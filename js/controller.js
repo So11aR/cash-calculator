@@ -30,17 +30,17 @@ let controller = (function(budgetCtrl, uiCtrl) {
   function ctrlDeleteItem(event) {
     let itemId, splitId, type, ID
     if (event.target.closest('.item__remove')) {
-      console.log('Remove btn');
 
       itemId = event.target.closest('li.budget-list__item').id
-      console.log(itemId);
 
       splitId = itemId.split('-')
       type = splitId[0]
-      ID = splitId[1]
+      ID = parseInt(splitId[1])
 
       console.log(type);
       console.log(ID);
+
+      budgetCtrl.deleteItem(type, ID)
     }
   }
 
