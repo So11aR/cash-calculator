@@ -17,7 +17,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
     // получаем данные по процентам с модели
     let idsAndPercents = budgetCtrl.getAllIdsAndPercentages()
     console.log("🚀 ~ file: controller.js:19 ~ updatePercentages ~ idsAndPercents:", idsAndPercents)
+    
     // обновляем UI с новыми процентами
+    uiCtrl.updateItemsPercentages(idsAndPercents)
   }
   
   // функция срабатывает при отрпавке формы

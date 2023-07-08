@@ -46,7 +46,7 @@ let viewController = (function () {
                       <div class="item__amount">
                           %value%
                           <div class="item__badge">
-                              <div class="badge badge--dark">
+                              <div class="item__percent badge badge--dark">
                                   15%
                               </div>
                           </div>
@@ -93,12 +93,30 @@ let viewController = (function () {
     document.getElementById(itemID).remove()
   }
 
+  function updateItemsPercentages(items) {
+    items.forEach(function(item){
+      // [инедкс 0, 26 %]
+      console.log("🚀 ~ file: view.js:101 ~ items.forEach ~ item:", item)
+
+      let el = document.getElementById(`exp-${item[0]}`).querySelector('.item__percent')
+      console.log("🚀 ~ file: view.js:103 ~ items.forEach ~ el:", el)
+
+      if (item[1] >= 0) {
+        el.parentElement.style.display = 'block'
+        el.textContent = item[1] + '%'
+      } else {
+        el.parentElement.style.display = 'none'
+      }
+    })
+  }
+
   return {
     getInput: getInput,
     renderListItem: renderListItem,
     clearFields: clearFields,
     updateBudget: updateBudget,
     deleteListItem: deleteListItem,
+    updateItemsPercentages: updateItemsPercentages,
     getDomStrings: function () {
       return DOMstrings;
     },
