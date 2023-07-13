@@ -10,7 +10,9 @@ let viewController = (function () {
     incomeLabel: "#income-label",
     expensesLabel: "#expense-label",
     expensesPersentLabel: "#expense-persent-label",
-    budgetTable: '#budget-table'
+    budgetTable: "#budget-table",
+    monthLabel: "#month",
+    yearLabel: "#year",
   };
 
   function getInput() {
@@ -21,6 +23,53 @@ let viewController = (function () {
     };
   }
 
+  function formatNumber(num, type) {
+    let numSplit, int, dec, newInt, resultNumber;
+
+    // Убираем знак минус у отрицательных чисел
+    num = Math.abs(num);
+    // Приводим к двум цифрам после точки
+    num = num.toFixed(2);
+
+    numSplit = num.split("."); // 45.78 => [45, 78]
+    // целая часть
+    int = numSplit[0]; // 45
+    // десятичная часть
+    dec = numSplit[1]; // 78
+
+    if (int.length > 3) {
+      newInt = "";
+
+      for (let i = 0; i < int.length / 3; i++) {
+        // формируем новую строку с номером
+        newInt =
+          // добавляем запятую каждые 3 числа
+          "," +
+          // Вырезанный кусок из исходной строки
+          int.substring(int.length - 3 * (i + 1), int.length - 3 * i) +
+          // Конец строки, правая часть
+          newInt;
+      }
+
+      if (newInt[0] === ",") {
+        newInt = newInt.substring(1);
+      }
+    } else if (int === 0) {
+      newInt = "0";
+    } else {
+      newInt = int;
+    }
+
+    resultNumber = newInt + "." + dec;
+
+    if (type === "exp") {
+      resultNumber = "- " + resultNumber;
+    } else if (type === "inc") {
+      resultNumber = "+ " + resultNumber;
+    }
+
+    return resultNumber;
+  }
   function renderListItem(obj, type) {
     let containerElement, html;
 
@@ -59,7 +108,7 @@ let viewController = (function () {
     }
     newHtml = html.replace("%id%", obj.id);
     newHtml = newHtml.replace("%description%", obj.description);
-    newHtml = newHtml.replace("%value%", obj.value);
+    newHtml = newHtml.replace("%value%", formatNumber(obj.value, type));
 
     document
       .querySelector(containerElement)
@@ -78,36 +127,84 @@ let viewController = (function () {
   }
 
   function updateBudget(obj) {
-    document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget
-    document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc
-    document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp
+    let type;
+    if (obj.budget > 0) {
+      type = "inc";
+    } else {
+      type = "exp";
+    }
+
+    document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(
+      obj.budget,
+      type
+    );
+    document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(
+      obj.totalInc,
+      "inc"
+    );
+    document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(
+      obj.totalExp,
+      "exp"
+    );
 
     if (obj.percentage > 0) {
-      document.querySelector(DOMstrings.expensesPersentLabel).textContent = obj.percentage
+      document.querySelector(DOMstrings.expensesPersentLabel).textContent =
+        obj.percentage;
     } else {
-      document.querySelector(DOMstrings.expensesPersentLabel).textContent = '--'
+      document.querySelector(DOMstrings.expensesPersentLabel).textContent =
+        "--";
     }
   }
 
   function deleteListItem(itemID) {
-    document.getElementById(itemID).remove()
+    document.getElementById(itemID).remove();
   }
 
   function updateItemsPercentages(items) {
-    items.forEach(function(item){
+    items.forEach(function (item) {
       // [инедкс 0, 26 %]
-      console.log("🚀 ~ file: view.js:101 ~ items.forEach ~ item:", item)
+      console.log("🚀 ~ file: view.js:101 ~ items.forEach ~ item:", item);
 
-      let el = document.getElementById(`exp-${item[0]}`).querySelector('.item__percent')
-      console.log("🚀 ~ file: view.js:103 ~ items.forEach ~ el:", el)
+      let el = document
+        .getElementById(`exp-${item[0]}`)
+        .querySelector(".item__percent");
+      console.log("🚀 ~ file: view.js:103 ~ items.forEach ~ el:", el);
 
       if (item[1] >= 0) {
-        el.parentElement.style.display = 'block'
-        el.textContent = item[1] + '%'
+        el.parentElement.style.display = "block";
+        el.textContent = item[1] + "%";
       } else {
-        el.parentElement.style.display = 'none'
+        el.parentElement.style.display = "none";
       }
-    })
+    });
+  }
+
+  function displayMonth() {
+    let now, month, year, monthArr;
+    now = new Date();
+    year = now.getFullYear(); // 2020
+    month = now.getMonth(); // Апрель => 3
+
+    monthArr = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+
+    month = monthArr[month]
+
+    document.querySelector(DOMstrings.monthLabel).innerText = month
+    document.querySelector(DOMstrings.yearLabel).innerText = year
+
   }
 
   return {
@@ -117,6 +214,7 @@ let viewController = (function () {
     updateBudget: updateBudget,
     deleteListItem: deleteListItem,
     updateItemsPercentages: updateItemsPercentages,
+    displayMonth: displayMonth,
     getDomStrings: function () {
       return DOMstrings;
     },
